@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-stress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andywang1908/nodejs-stress.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andywang1908/nodejs-stress/issues"
+  },
+  "homepage": "https://github.com/andywang1908/nodejs-stress#readme",
+  "dependencies": {
+    "bluebird": "^3.4.3",
+    "cheerio": "^0.22.0",
+    "fs": "0.0.1-security",
+    "request": "^2.74.0",
+    "winston": "^2.2.0"
+  }
+}
