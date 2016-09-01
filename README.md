@@ -1,1 +1,1 @@
-# nodejs-stress
+# nodejs-ghost

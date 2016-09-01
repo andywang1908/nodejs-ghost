@@ -24,12 +24,12 @@ oracledb.getConnection(
 
 return*/
 
-var taskFolder = './task/sportchek/'
+var taskFolder = './task/canadiantire/'
 
 var mapTask = require(taskFolder+'mapTask.js')
 var tasks = [] //new Array(1)
-var summary = require(taskFolder+'kpi.json')
-//var summary = {} //restart
+//var summary = require(taskFolder+'kpi.json')
+var summary = {} //restart
 console.log( Object.keys(summary).length )
 
 //write summary to html
@@ -52,37 +52,26 @@ util.logFile(taskFolder+'summary.html', '<li>total:'+htmlCount+'</li>'+html );
 //return;
 
 
-var Promise = require("bluebird");
+var Promise = require("bluebird")
 var singleDraw = require(taskFolder+'singleDraw.js')
 mapTask.mapTask(tasks)
 .then(function() {
   util.logConsole('info', 'tasks are created!')
-  //tasks = tasks.slice(0, 2);
+  tasks = tasks.slice(0, 2);
   //util.logConsole('debug', tasks)
 
   //return
-  Promise.map(tasks, function(task) {
+  return Promise.map(tasks, function(task) {
     // console.log(task)
     return singleDraw.singleDraw(task, summary, tasks)
   }, {concurrency: 5}).then(function() {
     //console.log(summary)
-    //util.logFile(taskFolder+'kpi.json', JSON.stringify(summary) );
-    console.log("All done but subway!!!")
-
-    util.logConsole('info', 'tasks are fixed!')
-    //tasks = tasks.slice(0, 1);
-    //util.logConsole('debug', tasks)
-
-    //return
-    Promise.map(tasks, function(task) {
-      // console.log(task)
-      return singleDraw.singleDraw(task, summary, tasks)
-    }, {concurrency: 5}).then(function() {
-      //console.log(summary)
-      util.logFile(taskFolder+'kpi.json', JSON.stringify(summary) );
-      console.log("All done!!!")
-    })
+    util.logFile(taskFolder+'kpi.json', JSON.stringify(summary) );
+    console.log("All done!!!")
   })
+})
+.then(function() {
+  console.log("All done???")
 })
 
 
