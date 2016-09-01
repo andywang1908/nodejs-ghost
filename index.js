@@ -4,6 +4,8 @@ require('events').EventEmitter.prototype._maxListeners = 100
 var Util = require('./util.js')
 var Promise = require('bluebird')
 
+var urlRoot = 'http://www.canadiantire.ca/en/kids-zone/baby-toddler/car-seats-accessories.html'
+
 var main = function(taskFolder) {
   var tasks = [] //new Array(1)
   //var summary = require(taskFolder+'kpi.json')
@@ -59,4 +61,105 @@ var genHtml = function(summary, taskFolder) {
   //return
 }
 
-main('./task/canadiantire/')
+//main('./task/canadiantire/')
+
+//PATH=/home/andy/green/pro/activator/activator-1.3.10-minimal/bin:/home/andy/green/pro/selenium/driver:$PATH
+var selenium = function() {
+
+  var webdriver = require('selenium-webdriver'),
+    By = webdriver.By,
+    until = webdriver.until;
+
+  var driver = new webdriver.Builder()
+    .forBrowser('firefox')
+    .build();
+
+  driver.get('http://www.canadiantire.ca/en/kids-zone/baby-toddler/car-seats-accessories.html');
+  driver.findElement(By.name('q')).sendKeys('webdriver');
+  driver.findElement(By.name('btnG')).click();
+  driver.wait(until.titleIs('webdriver - Google Search'), 5000);
+  //driver.quit();
+
+}
+//selenium()
+
+var bite = function() {
+  const Browser = require('zombie')
+  var assert = require('assert')
+
+  // We're going to make requests to http://example.com/signup
+  // Which will be routed to our test server localhost:3000
+  Browser.localhost('example.com', 3000)
+  Browser.proxy = 'http://ebc%5Cwangan1:Ontario3%24@204.40.194.129:3128'
+
+
+  const browser = new Browser()
+  browser.proxy = 'http://ebc%5Cwangan1:Ontario3%24@204.40.194.129:3128'
+
+  browser.visit('/signup', function() {
+    const value = browser.getCookie('session');
+    console.log(value + ':' + browser.location.href);
+  });
+
+  /*
+  browser.fetch(url)
+    .then(function(response) {
+      console.log('Status code:', response.status);
+      if (response.status === 200)
+        return response.text();
+    })
+    .then(function(text) {
+      //console.log('Document:', text);
+      Util.logFile('log/StepApply.html', text)
+    })
+    .catch(function(error) {
+      console.log('Network error');
+    });*/
+
+  browser.fetch(url, { waitFor: 10000 },
+    function(err, browser) {
+      // if I uncomment the following block, all non-Dojo tests pass.
+      var loadEvent = browser.document.createEvent("HTMLEvents");
+      loadEvent.initEvent("load", false, false);
+      browser.window.dispatchEvent(loadEvent);
+
+      // this fix also makes non-Dojo tests pass.
+      //browser.fire("load", browser.window);
+
+      // if I uncomment this line, onload passes but the load event does not.
+      //if (browser.window.onload) browser.window.onload();
+
+      self.callback(err, browser);
+    }
+  )
+  .then(function(response) {
+      console.log('Status code:', response.status);
+      if (response.status === 200)
+        return response.text();
+  })
+  .then(function(text) {
+    //console.log('Document:', text);
+    Util.logFile('log/StepApply.html', text)
+  })
+
+}
+
+//bite()
+
+var ghost = function() {
+
+var casper = require('casper').create();
+
+casper.start('http://casperjs.org/', function() {
+    this.echo(this.getTitle());
+});
+
+casper.thenOpen('http://phantomjs.org', function() {
+    this.echo(this.getTitle());
+});
+
+casper.run();
+
+}
+
+ghost()
