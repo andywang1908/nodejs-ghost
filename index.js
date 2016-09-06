@@ -141,7 +141,6 @@ var bite = function() {
     //console.log('Document:', text);
     Util.logFile('log/StepApply.html', text)
   })
-
 }
 
 //bite()
