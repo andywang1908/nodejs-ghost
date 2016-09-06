@@ -148,17 +148,39 @@ var bite = function() {
 
 var ghost = function() {
 
-var casper = require('casper').create();
+var phantom = require('phantom');
 
-casper.start('http://casperjs.org/', function() {
-    this.echo(this.getTitle());
-});
+var sitepage = null;
+var phInstance = null;
+//'--ignore-ssl-errors=yes', 
+phantom.create(['--load-images=no'], { logLevel: 'error' })
+    .then(instance => {
+        phInstance = instance;
+        return instance.createPage();
+    })
+    .then(page => {
+        sitepage = page;
+        return page.open(urlRoot) //'https://stackoverflow.com/'
+    })
+    .then(status => {
+        console.log(status);
 
-casper.thenOpen('http://phantomjs.org', function() {
-    this.echo(this.getTitle());
-});
+        var image_file_name = 'abc.png';//url_to_process.replace(/\W/g, '_') + ".png"
+        var image_path = "./" + image_file_name
+        sitepage.render(image_path);
 
-casper.run();
+        return sitepage.property('content');
+    })
+    .then(content => {
+        //console.log(content);
+        Util.logFile('log/StepApply.html', content)
+        sitepage.close();
+        phInstance.exit();
+    })
+    .catch(error => {
+        console.log(error);
+        phInstance.exit();
+    });
 
 }
 

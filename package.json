@@ -18,9 +18,10 @@
   "homepage": "https://github.com/andywang1908/nodejs-stress#readme",
   "dependencies": {
     "bluebird": "^3.4.3",
-    "casperjs": "^1.1.3",
+    "casper": "^0.1.1",
     "cheerio": "^0.22.0",
     "fs": "0.0.1-security",
+    "phantom": "^2.1.21",
     "request": "^2.74.0",
     "selenium-webdriver": "^3.0.0-beta-2",
     "winston": "^2.2.0",
