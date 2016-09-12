@@ -81,7 +81,7 @@ var selenium = function() {
   //driver.quit();
 
 }
-//selenium()
+selenium()
 
 var bite = function() {
   const Browser = require('zombie')
@@ -183,4 +183,4 @@ phantom.create(['--load-images=no'], { logLevel: 'error' })
 
 }
 
-ghost()
+//ghost()
